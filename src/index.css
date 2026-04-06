@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 7%;
+    --foreground: 210 20% 92%;
+
+    --card: 220 18% 10%;
+    --card-foreground: 210 20% 92%;
+
+    --popover: 220 18% 10%;
+    --popover-foreground: 210 20% 92%;
+
+    --primary: 28 100% 55%;
+    --primary-foreground: 220 20% 7%;
+
+    --secondary: 220 16% 16%;
+    --secondary-foreground: 210 20% 85%;
+
+    --muted: 220 14% 14%;
+    --muted-foreground: 215 12% 50%;
+
+    --accent: 200 100% 55%;
+    --accent-foreground: 220 20% 7%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 14% 18%;
+    --input: 220 14% 18%;
+    --ring: 28 100% 55%;
+
+    --radius: 0.75rem;
+
+    --warning: 45 100% 55%;
+    --warning-foreground: 220 20% 7%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 220 20% 7%;
+
+    --neon-blue: 200 100% 55%;
+    --neon-orange: 28 100% 55%;
+    --neon-yellow: 45 100% 55%;
+
+    --sidebar-background: 220 20% 5%;
+    --sidebar-foreground: 210 15% 65%;
+    --sidebar-primary: 28 100% 55%;
+    --sidebar-primary-foreground: 220 20% 7%;
+    --sidebar-accent: 220 16% 12%;
+    --sidebar-accent-foreground: 210 20% 92%;
+    --sidebar-border: 220 14% 14%;
+    --sidebar-ring: 28 100% 55%;
+
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer utilities {
+  .glow-orange {
+    box-shadow: 0 0 20px hsl(28 100% 55% / 0.15), 0 0 40px hsl(28 100% 55% / 0.05);
+  }
+  .glow-blue {
+    box-shadow: 0 0 20px hsl(200 100% 55% / 0.15), 0 0 40px hsl(200 100% 55% / 0.05);
+  }
+  .glow-yellow {
+    box-shadow: 0 0 20px hsl(45 100% 55% / 0.15), 0 0 40px hsl(45 100% 55% / 0.05);
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:scale-[1.02] hover:shadow-lg;
+  }
+}
