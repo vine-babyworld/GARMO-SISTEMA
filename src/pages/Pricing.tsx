@@ -15,6 +15,9 @@ import {
   type MpBabyStoreInputs,
 } from "@/types/pricing";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
+import { fetchTariffs } from "@/lib/tariffsFirestore";
+import { setBabyWorldChannels, setMpBabyStoreChannels } from "@/types/pricing";
 
 const fmt = (v: number) =>
   v.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -27,6 +30,14 @@ export default function Pricing() {
   "babyworld" | "sitebw" | "mercadopago" | "itau" | "mpbaby"
 >("babyworld");
   const { products } = useProducts();
+
+  // Carrega tarifas do Firebase e sobrescreve os arrays padrão
+useEffect(() => {
+  fetchTariffs().then((t) => {
+    setBabyWorldChannels(t.babyWorld);
+    setMpBabyStoreChannels(t.mpBabyStore);
+  });
+}, []);
 
   // Baby World inputs
   const [bw, setBw] = useState<BabyWorldInputs>({
@@ -342,12 +353,19 @@ const activeTitle =
                     <td className="px-4 py-3 font-medium text-foreground whitespace-nowrap">{r.channel}</td>
                     <td className="px-4 py-3 text-right font-mono text-foreground">{fmt(r.salePrice)}</td>
                     <td className="px-4 py-3 text-right font-mono text-muted-foreground">{r.commissionRate.toFixed(1)}%</td>
-                    <td className="px-4 py-3 text-right font-mono text-destructive"><div>{fmt(r.commissionValue)}</div>{r.shopeeFixedFee !== undefined && r.shopeeFixedFee > 0 && (
-                                                                                    <div className="mt-1 text-[11px] text-muted-foreground">
-                                                                                      Tarifa fixa: {fmt(r.shopeeFixedFee)}
-                                                                                    </div>
-                                                                                   )}
-                      </td>
+                    <td className="px-4 py-3 text-right font-mono text-destructive">
+                    <div>{fmt(r.commissionValue)}</div>
+                    {r.shopeeFixedFee !== undefined && r.shopeeFixedFee > 0 && (
+                      <div className="mt-1 text-[11px] text-muted-foreground">
+                        Tarifa fixa: {fmt(r.shopeeFixedFee)}
+                      </div>
+                    )}
+                    {r.fixedFee !== undefined && r.fixedFee > 0 && (
+                      <div className="mt-1 text-[11px] text-muted-foreground">
+                        Tarifa fixa: {fmt(r.fixedFee)}
+                      </div>
+                    )}
+                  </td>
                     <td className="px-4 py-3 text-right font-mono text-accent">{fmt(r.marketplaceCredit)}</td>
                     <td className={cn("px-4 py-3 text-right font-mono font-semibold", r.grossProfit >= 0 ? "text-success" : "text-destructive")}>
                       {fmt(r.grossProfit)}
