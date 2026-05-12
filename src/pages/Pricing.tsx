@@ -131,73 +131,61 @@ const activeTitle =
 
       {/* Search */}
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_420px]">
-  <div className="relative">
-    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-    <Input
-      placeholder="Buscar por SKU ou nome do produto..."
-      value={search}
-      onChange={(e) => {
-        setSearch(e.target.value);
-        setShowDropdown(true);
-      }}
-      onFocus={() => setShowDropdown(true)}
-      className="border-border bg-card pl-10"
-    />
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por SKU ou nome do produto..."
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setShowDropdown(true);
+            }}
+            onFocus={() => setShowDropdown(true)}
+            className="border-border bg-card pl-10"
+          />
 
-    {showDropdown && filtered.length > 0 && (
-      <div className="absolute z-50 mt-1 max-h-72 w-full overflow-y-auto rounded-lg border border-border bg-card shadow-xl">
-        {filtered.map((p, i) => (
-          <button
-            key={p.sku + i}
-            onClick={() => selectProduct(p)}
-            className="flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-secondary"
-          >
-            <span className="text-xs font-mono text-primary">{p.sku}</span>
-            <span className="flex-1 truncate text-foreground">
-              {p.name}
-            </span>
-            <span className="text-xs text-muted-foreground">
-              {fmt(p.cost)}
-            </span>
-          </button>
-        ))}
+          {showDropdown && filtered.length > 0 && (
+            <div className="absolute z-50 mt-1 max-h-72 w-full overflow-y-auto rounded-lg border border-border bg-card shadow-xl">
+              {filtered.map((p, i) => (
+                <button
+                  key={p.sku + i}
+                  onClick={() => selectProduct(p)}
+                  className="flex w-full items-center gap-3 px-4 py-2.5 text-left text-sm transition-colors hover:bg-secondary"
+                >
+                  <span className="text-xs font-mono text-primary">{p.sku}</span>
+                  <span className="flex-1 truncate text-foreground">{p.name}</span>
+                  <span className="text-xs text-muted-foreground">{fmt(p.cost)}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="rounded-xl border border-border bg-card/70 px-4 py-3">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-4">
+            <TopMetric
+              label="CMV / Custo"
+              value={selectedProduct ? fmt(selectedProduct.cost) : "-"}
+              tone="neutral"
+            />
+            <TopMetric
+              label="ICMS Compra"
+              value={selectedProduct ? `${(selectedProduct.icms * 100).toFixed(2)}%` : "-"}
+              tone="debit"
+            />
+            <TopMetric
+              label="IPI"
+              value={selectedProduct ? `${(selectedProduct.ipi * 100).toFixed(2)}%` : "-"}
+              tone="debit"
+            />
+            <TopMetric
+              label="NCM"
+              value={selectedProduct?.ncm || "-"}
+              tone="neutral"
+            />
+          </div>
+        </div>
       </div>
-    )}
-  </div>
-
-  <div className="rounded-xl border border-border bg-card/70 px-4 py-3">
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-4">
-      <TopMetric
-        label="CMV / Custo"
-        value={selectedProduct ? fmt(selectedProduct.cost) : "-"}
-        tone="neutral"
-      />
-      <TopMetric
-        label="ICMS Compra"
-        value={
-          selectedProduct
-            ? `${(selectedProduct.icms * 100).toFixed(2)}%`
-            : "-"
-        }
-        tone="debit"
-      />
-      <TopMetric
-        label="IPI"
-        value={
-          selectedProduct
-            ? `${(selectedProduct.ipi * 100).toFixed(2)}%`
-            : "-"
-        }
-        tone="debit"
-      />
-      <TopMetric
-        label="NCM"
-        value={selectedProduct?.ncm || "-"}
-        tone="neutral"
-      />
-    </div>
-  </div>
-</div>
 
       {/* Product Info */}
       {selectedProduct && (

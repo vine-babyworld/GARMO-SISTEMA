@@ -16,7 +16,9 @@ import {
   Save,
   Check,
   ChevronsUpDown,
+  Download,
 } from "lucide-react";
+import * as XLSX from "xlsx";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
 
@@ -249,6 +251,8 @@ export default function Devolucoes() {
     empresa: "",
     marketplace: "",
     status: "",
+    dataInicio: "",
+    dataFim: "",
   });
 
   const [form, setForm] = useState<FormState>(emptyForm());
@@ -329,11 +333,16 @@ export default function Devolucoes() {
 
       const matchesStatus = !filters.status || item.status === filters.status;
 
+      const matchesDataInicio = !filters.dataInicio || item.data >= filters.dataInicio;
+      const matchesDataFim = !filters.dataFim || item.data <= filters.dataFim;
+
       return (
         matchesBusca &&
         matchesEmpresa &&
         matchesMarketplace &&
-        matchesStatus
+        matchesStatus &&
+        matchesDataInicio &&
+        matchesDataFim
       );
     });
   }, [devolucoes, filters]);
@@ -604,6 +613,44 @@ export default function Devolucoes() {
     }
   }
 
+  function exportToExcel() {
+    const rows = filteredData.map((item) => ({
+      SKU: item.sku || "",
+      Produto: item.produtoNome || "",
+      Empresa: item.empresa || "",
+      Marketplace: item.marketplace || "",
+      Pedido: item.pedido || "",
+      Data: item.data || "",
+      Motivo: item.motivo || "",
+      Valor: Number((item.valor || 0).toFixed(2)),
+      Status: item.status || "",
+      Confirmada: item.confirmada ? "Sim" : "Não",
+      "Responsável Recebimento": item.responsavelRecebimento || "",
+      "Data Recebimento": item.dataRecebimento || "",
+      "Responsável Conferência": item.responsavelConferencia || "",
+      "Data Conferência": item.dataConferencia || "",
+      "Destino Final": item.destinoFinal || "",
+      "Motivo Destino": item.motivoDestino || "",
+      "Avaria Confirmada": item.avariaConfirmada ? "Sim" : "Não",
+      "Retornou ao Estoque": item.retornouAoEstoque ? "Sim" : "Não",
+      Observações: item.observacoes || "",
+    }));
+
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Devoluções");
+
+    let filename = "devolucoes_completo.xlsx";
+    if (filters.dataInicio || filters.dataFim) {
+      const toDisplay = (d: string) => d.split("-").reverse().join("-");
+      const inicio = filters.dataInicio ? toDisplay(filters.dataInicio) : "inicio";
+      const fim = filters.dataFim ? toDisplay(filters.dataFim) : "fim";
+      filename = `devolucoes_${inicio}_ate_${fim}.xlsx`;
+    }
+
+    XLSX.writeFile(wb, filename);
+  }
+
   return (
     <div className="animate-fade-in space-y-8">
       <div>
@@ -704,6 +751,18 @@ export default function Devolucoes() {
               </option>
             ))}
           </select>
+
+          <DatePickerField
+            value={filters.dataInicio}
+            onChange={(value) => setFilters((prev) => ({ ...prev, dataInicio: value }))}
+            placeholder="Data início"
+          />
+
+          <DatePickerField
+            value={filters.dataFim}
+            onChange={(value) => setFilters((prev) => ({ ...prev, dataFim: value }))}
+            placeholder="Data fim"
+          />
         </div>
       </div>
 
@@ -955,10 +1014,16 @@ export default function Devolucoes() {
       </div>
 
       <div className="rounded-xl border bg-card overflow-hidden">
-        <div className="border-b border-border px-5 py-4">
+        <div className="border-b border-border px-5 py-4 flex items-center justify-between">
           <h2 className="text-sm font-semibold text-foreground">
             Lista de devoluções
           </h2>
+          {filteredData.length > 0 && (
+            <Button variant="outline" size="sm" onClick={exportToExcel} className="gap-2">
+              <Download className="h-4 w-4" />
+              Exportar Excel
+            </Button>
+          )}
         </div>
 
         <div className="overflow-x-auto">
