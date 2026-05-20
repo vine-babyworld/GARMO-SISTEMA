@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 110" role="img" aria-label="Atlas logo">
+  <title>Atlas</title>
+  <path d="M 18 92 L 55 32 L 92 92" stroke="#0F0F0F" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="55" cy="26" r="10" fill="#F97316"/>
+  <text x="120" y="78" font-family="Inter, system-ui, -apple-system, Segoe UI, sans-serif" font-size="46" font-weight="700" fill="#0F0F0F" letter-spacing="1.5">ATLAS</text>
+</svg>

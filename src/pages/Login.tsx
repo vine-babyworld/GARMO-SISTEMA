@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { loginWithEmail } from "@/lib/auth";
 import { useAuth } from "@/contexts/AuthContext";
+import { AtlasLogo } from "@/components/AtlasLogo";
 
 export default function Login() {
   const { isAuthenticated, loading } = useAuth();
@@ -56,15 +57,15 @@ export default function Login() {
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-sm">
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10">
-            <LogIn className="h-6 w-6 text-primary" />
+          <div className="mx-auto mb-6 flex justify-center">
+            <AtlasLogo variant="horizontal" className="h-12 w-auto" />
           </div>
 
           <h1 className="text-2xl font-bold text-foreground">
             Entrar no sistema
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Acesse o Precificação BW-GARMO com seu usuário.
+            Acesse o ATLAS com seu usuário.
           </p>
         </div>
 

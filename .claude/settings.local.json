@@ -3,7 +3,11 @@
     "allow": [
       "Bash(npm install *)",
       "Bash(npx tsc *)",
-      "Bash(findstr xlsx *)"
+      "Bash(findstr xlsx *)",
+      "Bash(npm list *)",
+      "Bash(npx vite *)",
+      "Bash(node -e ' *)",
+      "Bash(npm run *)"
     ]
   }
 }

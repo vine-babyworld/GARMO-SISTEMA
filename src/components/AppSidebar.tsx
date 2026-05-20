@@ -15,10 +15,12 @@ import {
   Truck,
   Users,
   Percent,
+  BarChart2,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { logout } from "@/lib/auth";
+import { AtlasLogo } from "@/components/AtlasLogo";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/" },
@@ -28,6 +30,7 @@ const navItems = [
 
   { label: "Cadastro de Produtos", icon: PackagePlus, path: "/products" },
   { label: "Devoluções", icon: RotateCcw, path: "/devolucoes" },
+  { label: "Diagnóstico ML", icon: BarChart2, path: "/ml-diagnostico" },
 ];
 
 const settingsSubmenu = [
@@ -78,19 +81,10 @@ export function AppSidebar() {
       )}
     >
       <div className="flex h-16 items-center gap-3 border-b border-border px-4">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white shadow-sm">
-          <img
-            src="/favicon.ico"
-            alt="BW-GARMO"
-            className="h-6 w-6 object-contain"
-          />
-        </div>
-
-        {!collapsed && (
-          <div className="flex flex-col leading-tight">
-            <span className="text-xs text-muted-foreground">Precificação</span>
-            <span className="text-sm font-bold text-foreground">BW-GARMO</span>
-          </div>
+        {collapsed ? (
+          <AtlasLogo variant="icon" strokeColor="#FFFFFF" className="h-7 w-7 shrink-0" />
+        ) : (
+          <AtlasLogo variant="horizontal" strokeColor="#FFFFFF" className="h-8 w-auto" />
         )}
       </div>
 

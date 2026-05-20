@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import Devolucoes from "./pages/Devolucoes";
 import TariffsSettingsPage from "./pages/TariffsSettings";
 import UsersPage from "./pages/Users";
+import MercadoLivreDiagnostico from "./pages/MercadoLivreDiagnostico";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ const App = () => (
                 element={<PlaceholderPage title="Shopee" />}
               />
               <Route path="/devolucoes" element={<Devolucoes />} />
+              <Route path="/ml-diagnostico" element={<MercadoLivreDiagnostico />} />
               <Route path="/products" element={<Products />} />
               <Route
                 path="/updates"
