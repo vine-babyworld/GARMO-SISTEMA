@@ -58,7 +58,7 @@ export default function Login() {
       <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-sm">
         <div className="mb-6 text-center">
           <div className="mx-auto mb-6 flex justify-center">
-            <AtlasLogo variant="horizontal" className="h-12 w-auto" />
+            <AtlasLogo variant="horizontal" strokeColor="#FFFFFF" className="h-12 w-auto" />
           </div>
 
           <h1 className="text-2xl font-bold text-foreground">

@@ -1,5 +1,18 @@
 {
   "projects": {
     "default": "precificacao-babyworld"
-  }
+  },
+  "targets": {
+    "precificacao-babyworld": {
+      "hosting": {
+        "atlas": [
+          "atlas-babyworld"
+        ],
+        "antigo": [
+          "precificacao-babyworld"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

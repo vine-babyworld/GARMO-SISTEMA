@@ -7,7 +7,11 @@
       "Bash(npm list *)",
       "Bash(npx vite *)",
       "Bash(node -e ' *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(firebase deploy *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
